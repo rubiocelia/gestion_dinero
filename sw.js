@@ -1,5 +1,5 @@
 // Permite abrir la app sin conexión. Sube VERSION cuando cambies archivos.
-const VERSION = "gastos-v3";
+const VERSION = "gastos-v4";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", e => {

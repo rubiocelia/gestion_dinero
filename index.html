@@ -667,6 +667,8 @@ dialog::backdrop{background:rgba(10,12,16,.45)}
   }
   $("seg").addEventListener("click", e=>{
     const b=e.target.closest("button[data-t]"); if(!b) return;
+    // Al cambiar de tipo, el formulario empieza limpio (salvo si estás editando)
+    if(!state.editId && b.dataset.t!==state.tipo){ $("importe").value=""; $("concepto").value=""; $("nota").value=""; $("formErr").textContent="" }
     setTipo(b.dataset.t);
     if(b.dataset.t==="ahorro" && !$("concepto").value) $("concepto").value="Cuenta de ahorro";
   });
@@ -739,6 +741,7 @@ dialog::backdrop{background:rgba(10,12,16,.45)}
     save();
     const [y,m]=fecha.split("-").map(Number);
     if(y!==state.ym.y || m-1!==state.ym.m) state.ym={y,m:m-1};
+    state.tipo="gasto"; // tras guardar, vuelve a «Gasto», que es lo más habitual
     resetForm(); render();
     const where = t==="ahorro" ? "a la cuenta de ahorro" : "en " + movCat(g).name;
     toast(editing ? "Cambios guardados" : `${TIPOS[t].label.charAt(0).toUpperCase()+TIPOS[t].label.slice(1)}: ${eur.format(importe)} ${where}`);
